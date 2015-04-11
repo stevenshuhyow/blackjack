@@ -6,9 +6,37 @@ class window.Hand extends Backbone.Collection
   hit: ->
     @add(@deck.pop())
 
+  stand: ->
+    @at(0).flip()
+    @dealerPlay()
+
+
+  dealerPlay: ->
+    # if hasAce
+    if @hasAce()
+      # ace(11) && <= 17, hit
+      while @scores()[1] <= 17
+        @hit()
+      if @scores()[1] > 21
+      # ace(1) && <=16, hit
+        while @scores()[0] <= 16
+          @hit()
+      # ace(1) && > 16, stand
+#      @end()
+    else
+    # if !hasAce
+      # no ace && < 17, hit
+      while @scores()[1] < 17
+        @hit()
+      # no ace && => 17, stand
+#      @end()
+
+    debugger;
+
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
   , 0
+
 
   minScore: -> @reduce (score, card) ->
     score + if card.get 'revealed' then card.get 'value' else 0
@@ -21,3 +49,7 @@ class window.Hand extends Backbone.Collection
     [@minScore(), @minScore() + 10 * @hasAce()]
 
 
+
+    # while (no aces + (dealerHand.scores()[0] < 18)), hit
+    #
+    # else, compare dealer score with player score

@@ -15,3 +15,10 @@ class window.Card extends Backbone.Model
     @set 'revealed', !@get 'revealed'
     @
 
+#  stand: ->
+#    @trigger('stand', @)
+
+# var flip = function() {
+#   this.set('revealed') = !this.get('revealed')
+#   return this;
+#   };
