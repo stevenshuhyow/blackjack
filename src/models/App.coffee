@@ -7,10 +7,28 @@ class window.App extends Backbone.Model
     @set 'dealerHand', deck.dealDealer()
     dealer = @get('dealerHand')
     player = @get('playerHand')
-    @get('dealerHand').on 'end', ->
+
+    @get('playerHand').on 'end', ->
       debugger
-      alert(dealer.scores())
-      alert(player.scores())
+      if (player)
+        alert 'player loses'
+      @initialize()
+
+
+
+    @get('dealerHand').on 'end', ->
+      #if dealer.scores()[1] > player.scores()[1]
+      debugger
+
+      if dealer.scores()[1] > player.scores()[1] && dealer.scores()[1] < 22
+        alert 'dealer wins'
+
+      else
+        alert 'player wins'
+
+      @initialize()
+
+
 
   # console.log @get 'dealerHand'
   # debugger
