@@ -10,7 +10,6 @@ class window.Hand extends Backbone.Collection
     @at(0).flip()
     @dealerPlay()
 
-
   dealerPlay: ->
     # if hasAce
     if @hasAce()
@@ -22,16 +21,20 @@ class window.Hand extends Backbone.Collection
         while @scores()[0] <= 16
           @hit()
       # ace(1) && > 16, stand
-#      @end()
+        @scores()[1] = @scores()[0]
+
+      @end()
     else
     # if !hasAce
       # no ace && < 17, hit
       while @scores()[1] < 17
         @hit()
       # no ace && => 17, stand
-#      @end()
+      @end()
+    debugger
+  end: ->
+    # compare player and dealer scores and determine winner
 
-    debugger;
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -47,6 +50,7 @@ class window.Hand extends Backbone.Collection
     # Usually, that array contains one element. That is the only score.
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
+#    @trigger('score', @)
 
 
 
