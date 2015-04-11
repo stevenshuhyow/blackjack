@@ -7,10 +7,10 @@ class window.Hand extends Backbone.Collection
     @add(@deck.pop())
 
   stand: ->
-    @at(0).flip()
-    @dealerPlay()
 
   dealerPlay: ->
+    @at(0).flip()
+
     # if hasAce
     if @hasAce()
       # ace(11) && <= 17, hit
@@ -32,9 +32,10 @@ class window.Hand extends Backbone.Collection
       # no ace && => 17, stand
       @end()
     debugger
-  end: ->
-    # compare player and dealer scores and determine winner
 
+  end: ->
+    @trigger('end', @)
+    # ask player if he wants to start a new game
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
